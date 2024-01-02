@@ -88,5 +88,7 @@ Note that the `notebooks` folder is included in the [`.gitignore`](./.gitignore)
 because notebooks should not be included in version control.
 It is the users responsibility to make sure that the changes in the `.ipynb` files are reflected in the `.py` file before comits or merges.
 
-Note that in case you are not using VSCode, which only requires `ipykernel`,
-you may need to run `conda install jupyter` to work with Jupyter notebooks.
+Note that in case you are not using VSCode,
+which can run notebooks using only the `ipykernel` module,
+you will have to install `conda install jupyter
+in your environment to work with Jupyter notebooks.
