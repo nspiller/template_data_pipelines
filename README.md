@@ -84,9 +84,11 @@ jupytext --sync scripts/example.py
 [jupytext] Updating the timestamp of scripts/example.py
 ```
 Calling `jupytext` again on either the `.py` or the `.ipynb` file will update the contents of the older file with the newer ones.
-Note that the `notebooks` folder is included in the [`.gitignore`](./.gitignore),
-because notebooks should not be included in version control.
-It is the users responsibility to make sure that the changes in the `.ipynb` files are reflected in the `.py` file before comits or merges.
+
+Note that the `notebooks` folder can be included in the [`.gitignore`](./.gitignore),
+so that notebooks to not overcrowd the version control hisotry.
+This is adviced if all users of the repo know how to handle the `.py` files.
+In this case, it may be useful to create the notebook files in the git releases.
 
 Note that in case you are not using VSCode,
 which can run notebooks using only the `ipykernel` module,
