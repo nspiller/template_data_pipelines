@@ -30,13 +30,13 @@ Getting the code up and running on a new system is done via the command in the `
 ```
 # get source code
 git clone https://github.com/bidaye-lab/template_repo
+cd template_repo
 
 # create conda environment with necessary dependencies
 conda env create -n template_repo -f environment.yml
 conda activate template_repo
 
 # install project code as local local python module
-cd template_repo
 pip install -e .
 ```
 
