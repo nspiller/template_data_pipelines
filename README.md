@@ -1,6 +1,5 @@
 Template file and folder structure for data pipelines
 
-# Organization
 The file and code structure of this repo is inspired by the 
 [The Good Research Code Handbook](https://goodresearch.dev/setup#)
 by Patick Mineault.
@@ -11,12 +10,28 @@ The code in the `src` directory is installed as a local, editable python package
 It is installed via the python package manager `pip` into some `conda` environment
 and is then accessible via `from src import ...` in any python script.
 
-The only prerequisite is therefore that `conda` is installed on the system.
-If you do not have [Anaconda](https://www.anaconda.com/download) already installed,
-I recommend to install
-[miniforge](https://github.com/conda-forge/miniforge) instead.
+## Prerequisites
+### Conda 
+Download and install [miniforge](https://github.com/conda-forge/miniforge)
+(recommended if you do _not_ have Anaconda already installed).
 This gives you a light-weight `conda` installation and access to the
-faster [`mamba`](https://github.com/conda-forge/miniforge) package manager.
+faster `mamba` package manager.
+
+If you already do have [Anaconda](https://www.anaconda.com/download) installed,
+you can just use this, if you do not want to switch to miniforge.
+
+How to work with `conda` environments can be found in the 
+[`mamba`](https://mamba.readthedocs.io/en/latest/user_guide/mamba.html#)
+or 
+[`conda`](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html)
+user guides.
+
+### Git
+Download and install [`git`](https://git-scm.com/downloads) for your operating system.
+
+While it is not strictly necessary to use `git clone` to download the code,
+it is recommended because you can easily get the latest updates via `git pull`
+(see below).
 
 ## Dependencies
 Dependencies on python packages are are stored in the `environment.yml` file.
@@ -25,24 +40,40 @@ The packages are typically installed from
 - the `conda-forge` channel
 - `pypi` for packages not available on `conda-forge`
 
-## setting up a conda environment
-Getting the code up and running on a new system is done via the command in the `conda` prompt:
+## Installing local code
+Getting the code up and running on a new system is done via the command in the `conda` prompt (adapt URL and name to your repo):
 ```
 # get source code
-git clone https://github.com/bidaye-lab/template_repo
-cd template_repo
+git clone https://github.com/nspiller/template_data_pipelines 
+cd template_data_pipelines 
 
 # create conda environment with necessary dependencies
-conda env create -n template_repo -f environment.yml
-conda activate template_repo
+conda env create -n template_data_pipelines -f environment.yml
+conda activate template_data_pipelines
 
 # install project code as local local python module
 pip install -e .
+
+# convert scripts to notebooks
+jupytext --sync scripts/*.py
 ```
 
 If using `mamba`, simply replace `conda` with `mamba` in the above commands.
 
-If [`git`](https://git-scm.com/downloads) is not installed on the system, the code can also be downloaded as a zip file from the github website.
+If `git` is not installed on the system, the code can also be downloaded as a zip file from the github website.
+
+## Updating the local code
+```
+# update with latest changes
+git pull origin main
+
+# convert scripts to notebooks
+jupytext --sync scripts/*.py
+```
+
+If `git` is not installed on your system, you will have to set up a new environment for the udpated code to avoid any conflicts.
+
+Note that `jupytext --sync` will update the paired `scripts/*py` and `notebooks/*ipynb` based on their time stamp.
 
 # Working with script files
 A convenient way to work with python code is via Jupyter notebooks,
