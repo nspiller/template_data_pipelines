@@ -1,3 +1,0 @@
-[tool.jupytext.formats]
-"notebooks/" = "ipynb"
-"scripts/" = "py:percent"

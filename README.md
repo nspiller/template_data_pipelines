@@ -55,7 +55,7 @@ conda activate template_data_pipelines
 pip install -e .
 
 # convert scripts to notebooks
-jupytext --sync scripts/*.py
+python src/create_notebooks.py
 ```
 
 If using `mamba`, simply replace `conda` with `mamba` in the above commands.
@@ -68,12 +68,14 @@ If `git` is not installed on the system, the code can also be downloaded as a zi
 git pull origin main
 
 # convert scripts to notebooks
-jupytext --sync scripts/*.py
+python src/create_notebooks.py
 ```
 
-If `git` is not installed on your system, you will have to set up a new environment for the udpated code to avoid any conflicts.
+Note that will result in an error, if you have modified any file other than those in the `notebooks` folder.
+To revert any changes, use `git status` to see which files have been modified and then `git reset --hard` to revert the changes.
+Then run the `git pull` command again.
 
-Note that `jupytext --sync` will update the paired `scripts/*py` and `notebooks/*ipynb` based on their time stamp.
+If `git` is not installed on your system, you will have to set up a new environment for the udpated code to avoid any conflicts.
 
 # Working with script files
 A convenient way to work with python code is via Jupyter notebooks,
@@ -102,26 +104,17 @@ but any changes made to the `.ipynb` file are directly written to the `.py` file
 The `.py` file can then be committed to version control.
 
 ## option 2: Manually converting between script and notebook files with the jupytext CLI
-`jupytext` can be called from the command line to sync between `.ipynb` and `.py` file.
-The [configuration file](./pyproject.toml)
-in this repo defines `scripts` as the folder to store `.py` files,
-and `notebooks` folder to create the corresponding `.ipynb` files.
+`jupytext` can be called from the command line convert between `.ipynb` and `.py` file.
+This [command line script](./src/create_notebooks.py) cycles through all `.py` files in the
+`scripts` folder and creates the corresponding `.ipynb` files in the `notebooks` folder.
 
-Calling `jupytext` on a `.py` file will create the corresponding `.ipynb` file in the `notebooks` folder:
 ```
-jupytext --sync scripts/example.py
-[jupytext] Reading scripts/example.py in format py
-[jupytext] Updating notebooks/example.ipynb
-[jupytext] Updating the timestamp of scripts/example.py
+conda activate template_data_pipelines
+cd template_data_pipelines
+python src/create_notebooks.py
 ```
-Calling `jupytext` again on either the `.py` or the `.ipynb` file will update the contents of the older file with the newer ones.
-
-Note that the `notebooks` folder can be included in the [`.gitignore`](./.gitignore),
-so that notebooks to not overcrowd the version control hisotry.
-This is adviced if all users of the repo know how to handle the `.py` files.
-In this case, it may be useful to create the notebook files in the git releases.
-
-Note that in case you are not using VSCode,
-which can run notebooks using only the `ipykernel` module,
-you will have to install `conda install jupyter
-in your environment to work with Jupyter notebooks.
+Note that this is designed for a one-way conversion to merge the latest 
+changes from the repo,
+so any changes in the `.ipynb` file will be overwritten.
+To merge the changes from the `.ipynb` file to the `.py` file, refer to the
+[`jupytext`](https://jupytext.readthedocs.io/en/latest/index.html) documentation
