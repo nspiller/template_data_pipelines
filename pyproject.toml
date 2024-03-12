@@ -1,0 +1,6 @@
+[tool.jupytext.formats]
+"notebooks/" = "ipynb"
+"notebooks/scripts/" = "py:percent"
+[tool.jupytext]
+notebook_metadata_filter="-all"
+cell_metadata_filter="-all"
