@@ -1,12 +1,11 @@
 channels:
   - conda-forge
 dependencies:
-  - python=3.8
+  - python=3.9
   - numpy
-  - scipy
-  - pandas
   - matplotlib
-  - seaborn
+  - pandas
   - jupyter
-  - ipykernel
-  - jupytext
+  - pip
+  - pip:
+    - jupytext~=1.0
