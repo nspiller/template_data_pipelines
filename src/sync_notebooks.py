@@ -15,7 +15,7 @@ def sync(notebook_folder, script_folder):
     files = list(notebook_files) + list(script_files)
 
     for f in files:
-        command = f"jupytext --sync {f}"
+        command = f"jupytext --sync {f.as_posix()}"
         print(f">> RUNNING {command}")
         subprocess.run(command.split())
 
