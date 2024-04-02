@@ -109,12 +109,22 @@ python src/sync_notebooks.py
 Note that it is the user's responsibility to ensure that the `.py` and `.ipynb` files are in sync before committing to version control.
 
 ### Automatic conversion
-One can ensure that the `.py` and `.ipynb` files are always up to date using Github Actions. 
-The Actions file [`.github/workflows/sync_notebooks.yml`](./.github/workflows/sync_notebooks.yml) is triggered on every pull request and pushes to the main branch.
+One can ensure that the `.py` and `.ipynb` files are always up to date using GitHub Actions. 
+The Actions workflow is stored in 
+[`.github/workflows/sync_notebooks.yml.disabled`](./.github/workflows/sync_notebooks.yml.disabled).
+To enable it, simply rename the file to `.github/workflows/sync_notebooks.yml` and push the changes to the main branch.
+Note that this workflows does not use the `jupytext --sync` option
+and therefore ignores the `pyproject.toml` configuration file, 
+so you have to set the `NOTEBOOK_FOLDER` and `SCRIPT_FOLDER` environment variables in the workflow file.
+
+The Actions workflow is triggered on every pull request and pushes to the main branch.
 It then syncs notebooks and script files, and adds potiential changes as a new commit to etiher the pull request or directly to the main branch.
 Since the Actions bot is creating commits, it is important to enable write permissions for the bot in the repository settings.
 
-Note that this approach compares notebook and script files based on their commit history, because git does not store file modification times.
+Note that this approach compares notebook and script files based on their commit history,
+because git does not store file modification times.
+If both files have been modified in the same commit,
+the Actions workflow will assume that both files are in sync.
 
 ### Jupytext extension for VSCode
 When working with VSCode, the extension
