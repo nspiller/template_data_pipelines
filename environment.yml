@@ -7,5 +7,6 @@ dependencies:
   - pandas
   - jupyter
   - pip
+  - pre-commit
   - pip:
     - jupytext~=1.0
