@@ -92,6 +92,8 @@ The conversion is done via the [Jupytext](https://jupytext.readthedocs.io/en/lat
         └── workflow2.py
 ```
 ## Jupytext workflows
+Here are a few examples for how to convert between `.ipynb` and `.py` files using Jupytext.
+
 ### Manual conversion
 The simplest way to convert between `.ipynb` and `.py` files is to use the
 [Jupytext CLI](https://jupytext.readthedocs.io/en/latest/using-cli.html).
@@ -108,14 +110,22 @@ python src/sync_notebooks.py
 
 Note that it is the user's responsibility to ensure that the `.py` and `.ipynb` files are in sync before committing to version control.
 
-### Automatic conversion
-One can ensure that the `.py` and `.ipynb` files are always up to date using GitHub Actions. 
-The Actions workflow is stored in 
+### Automatic conversion: pre-commit hooks
+Jupytext provides a [pre-commit hook](https://jupytext.readthedocs.io/en/latest/using-pre-commit.html)
+that runs `jupytext --sync` everytime you commit notebooks or scripts.
+The hook is stored in the [`.pre-commit-config.yaml`](./.pre-commit-config.yaml) file and can be installed running
+```
+pre-commit install
+```
+
+### Automatic conversion: Github Actions
+The GitHub Actions workflow that syncs notebooks and script files is stored in 
 [`.github/workflows/sync_notebooks.yml.disabled`](./.github/workflows/sync_notebooks.yml.disabled).
 To enable it, simply rename the file to `.github/workflows/sync_notebooks.yml` and push the changes to the main branch.
-Note that this workflows does not use the `jupytext --sync` option
-and therefore ignores the `pyproject.toml` configuration file, 
-so you have to set the `NOTEBOOK_FOLDER` and `SCRIPT_FOLDER` environment variables in the workflow file.
+Note that this workflow uses `jupytext` with explicitly defined input and output files instead
+of `jupytext --sync`.
+Therefore, it ignores the `pyproject.toml` configuration file and
+you have to set the `NOTEBOOK_FOLDER` and `SCRIPT_FOLDER` environment variables in the workflow file.
 
 The Actions workflow is triggered on every pull request and pushes to the main branch.
 It then syncs notebooks and script files, and adds potiential changes as a new commit to etiher the pull request or directly to the main branch.
